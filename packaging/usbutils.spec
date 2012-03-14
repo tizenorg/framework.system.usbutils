@@ -6,7 +6,7 @@ Url:            http://www.linux-usb.org/
 Source:         http://downloads.sourceforge.net/linux-usb/%{name}-%{version}.tar.gz
 Summary:        Linux USB utilities
 Group:          Applications/System
-Source101:      usbutils-rpmlintrc
+#Source101:      usbutils-rpmlintrc
 BuildRequires:  autoconf,
 BuildRequires:  libtool,
 BuildRequires:  pkgconfig(libusb) >= 0.1.8
