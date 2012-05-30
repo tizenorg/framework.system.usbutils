@@ -4,6 +4,7 @@ Release:        6
 License:        GPLv2+
 Url:            http://www.linux-usb.org/
 Source:         http://downloads.sourceforge.net/linux-usb/%{name}-%{version}.tar.gz
+Source1001: packaging/usbutils.manifest 
 Summary:        Linux USB utilities
 Group:          Applications/System
 #Source101:      usbutils-rpmlintrc
@@ -19,6 +20,7 @@ USB bus.
 %setup -q
 
 %build
+cp %{SOURCE1001} .
 %reconfigure \
 	--datadir=/usr/lib/usbutils
 
@@ -30,6 +32,7 @@ make install DESTDIR=%{buildroot} pkgconfigdir=/usr/share/pkgconfig
 %docs_package
 
 %files
+%manifest usbutils.manifest
 %defattr(-,root,root,-)
 %{_sbindir}/*
 %{_bindir}/*
