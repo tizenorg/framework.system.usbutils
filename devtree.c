@@ -15,14 +15,6 @@
  *      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *      GNU General Public License for more details.
  *
- *      You should have received a copy of the GNU General Public License
- *      along with this program; if not, write to the Free Software
- *      Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- *
- *  Please note that the GPL allows you to use the driver, NOT the radio.
- *  In order to use the radio, you need a license from the communications
- *  authority of your country.
- *
  */
 
 /*****************************************************************************/
@@ -38,6 +30,7 @@
 #include <string.h>
 #include <unistd.h>
 
+#include "names.h"
 #include "devtree.h"
 
 /* ---------------------------------------------------------------------- */
@@ -74,8 +67,8 @@ void devtree_markdeleted(void)
 {
 	struct usbbusnode *bus;
 	struct list_head *list;
-	
-	for(list = usbbuslist.next; list != &usbbuslist; list = list->next) {
+
+	for (list = usbbuslist.next; list != &usbbuslist; list = list->next) {
 		bus = list_entry(list, struct usbbusnode, list);
 		markdel(&bus->childlist);
 	}
@@ -85,8 +78,8 @@ struct usbbusnode *devtree_findbus(unsigned int busn)
 {
 	struct usbbusnode *bus;
 	struct list_head *list;
-	
-	for(list = usbbuslist.next; list != &usbbuslist; list = list->next) {
+
+	for (list = usbbuslist.next; list != &usbbuslist; list = list->next) {
 		bus = list_entry(list, struct usbbusnode, list);
 		if (bus->busnum == busn)
 			return bus;
@@ -143,45 +136,45 @@ void devtree_parsedevfile(int fd)
 		*lineend = 0;
 		switch (start[0]) {
 		case 'T':  /* topology line */
-			if ((cp = strstr(start, "Dev#="))) {
+			if ((cp = strstr(start, "Dev#=")))
 				devnum = strtoul(cp + 5, NULL, 0);
-			} else
+			else
 				devnum = 0;
-			if ((cp = strstr(start, "Bus="))) {
+			if ((cp = strstr(start, "Bus=")))
 				busnum = strtoul(cp + 4, NULL, 10);
-			} else
+			else
 				busnum = 0;
-			if ((cp = strstr(start, "Prnt="))) {
+			if ((cp = strstr(start, "Prnt=")))
 				parentdevnum = strtoul(cp + 5, NULL, 10);
-			} else
+			else
 				parentdevnum = 0;
-			if ((cp = strstr(start, "Lev="))) {
+			if ((cp = strstr(start, "Lev=")))
 				level = strtoul(cp + 4, NULL, 10);
-			} else
+			else
 				level = 0;
 			if (strstr(start, "Spd=1.5"))
 				speed = 1;
 			else if (strstr(start, "Spd=12"))
 				speed = 2;
-			else 
+			else
 				speed = 0;
 			break;
 
 		case 'D':
-			if ((cp = strstr(start, "Cls="))) {
+			if ((cp = strstr(start, "Cls=")))
 				class = strtoul(cp + 4, NULL, 16);
-			} else
+			else
 				class = 0xff;
 			break;
 
 		case 'P':
-			if ((cp = strstr(start, "Vendor="))) {
+			if ((cp = strstr(start, "Vendor=")))
 				vendor = strtoul(cp + 7, NULL, 16);
-			} else
+			else
 				vendor = 0xffff;
-			if ((cp = strstr(start, "ProdID="))) {
+			if ((cp = strstr(start, "ProdID=")))
 				prodid = strtoul(cp + 7, NULL, 16);
-			} else
+			else
 				prodid = 0xffff;
 			/* print device */
 #if 0
@@ -241,7 +234,8 @@ static void deletetree(struct list_head *list, unsigned int force)
 	for (list2 = list->next; list2 != list;) {
 		dev = list_entry(list2, struct usbdevnode, list);
 		list2 = list2->next;
-		deletetree(&dev->childlist, force || dev->flags & USBFLG_DELETED);
+		deletetree(&dev->childlist,
+			   force || dev->flags & USBFLG_DELETED);
 		if (!force && !(dev->flags & USBFLG_DELETED))
 			continue;
 		list_del(&dev->list);
@@ -292,10 +286,13 @@ void devtree_processchanges(void)
 
 /* ---------------------------------------------------------------------- */
 
-static void dumpdevlist(struct list_head *list, unsigned int level, unsigned int mask)
+static void dumpdevlist(struct list_head *list, unsigned int level,
+			unsigned int mask, unsigned int verblevel)
 {
 	struct usbdevnode *dev;
 	struct list_head *list2;
+	char vendor[128];
+	char product[128];
 	char buf[512];
 	char *cp;
 	unsigned int i;
@@ -315,14 +312,23 @@ static void dumpdevlist(struct list_head *list, unsigned int level, unsigned int
 			*cp++ = '`';
 		}
 		*cp++ = '-';
-		snprintf(cp, buf + sizeof(buf) - cp, "Dev# %3d Vendor 0x%04x Product 0x%04x",
-			 dev->devnum, dev->vendorid, dev->productid);
+		if (verblevel > 1) {
+			get_vendor_string(vendor, sizeof(vendor), dev->vendorid);
+			get_product_string(product, sizeof(product), dev->vendorid, dev->productid);
+			snprintf(cp, buf + sizeof(buf) - cp,
+				"Dev# %3d Vendor 0x%04x Product 0x%04x %s %s",
+				dev->devnum, dev->vendorid, dev->productid, vendor, product);
+		} else {
+			snprintf(cp, buf + sizeof(buf) - cp,
+				 "Dev# %3d Vendor 0x%04x Product 0x%04x",
+				 dev->devnum, dev->vendorid, dev->productid);
+		}
 		lprintf(1, "%s\n", buf);
-		dumpdevlist(&dev->childlist, level+1, mask);
+		dumpdevlist(&dev->childlist, level+1, mask, verblevel);
 	}
 }
 
-void devtree_dump(void)
+void devtree_dump(unsigned int verblevel)
 {
 	struct list_head *list;
 	struct usbbusnode *bus;
@@ -330,6 +336,6 @@ void devtree_dump(void)
 	for (list = usbbuslist.next; list != &usbbuslist; list = list->next) {
 		bus = list_entry(list, struct usbbusnode, list);
 		lprintf(1, "Bus# %2d\n", bus->busnum);
-		dumpdevlist(&bus->childlist, 0, 0);
+		dumpdevlist(&bus->childlist, 0, 0, verblevel);
 	}
 }

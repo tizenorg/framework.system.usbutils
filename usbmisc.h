@@ -14,11 +14,6 @@
  *      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *      GNU General Public License for more details.
  *
- *      You should have received a copy of the GNU General Public License
- *      along with this program; if not, write to the Free Software
- *      Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- *
- *
  */
 
 /*****************************************************************************/
@@ -26,11 +21,11 @@
 #ifndef _USBMISC_H
 #define _USBMISC_H
 
-#include <usb.h>
+#include <libusb.h>
 
 /* ---------------------------------------------------------------------- */
 
-extern struct usb_device *get_usb_device(const char *path);
+extern libusb_device *get_usb_device(libusb_context *ctx, const char *path);
 
 /* ---------------------------------------------------------------------- */
 #endif /* _USBMISC_H */

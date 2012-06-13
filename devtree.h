@@ -15,14 +15,6 @@
  *      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *      GNU General Public License for more details.
  *
- *      You should have received a copy of the GNU General Public License
- *      along with this program; if not, write to the Free Software
- *      Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- *
- *  Please note that the GPL allows you to use the driver, NOT the radio.
- *  In order to use the radio, you need a license from the communications
- *  authority of your country.
- *
  */
 
 /*****************************************************************************/
@@ -72,16 +64,18 @@ extern struct list_head usbbuslist;
 
 extern void devtree_markdeleted(void);
 extern struct usbbusnode *devtree_findbus(unsigned int busn);
-extern struct usbdevnode *devtree_finddevice(struct usbbusnode *bus, unsigned int devn);
+extern struct usbdevnode *devtree_finddevice(struct usbbusnode *bus,
+					     unsigned int devn);
 extern void devtree_parsedevfile(int fd);
 extern void devtree_busconnect(struct usbbusnode *bus);
 extern void devtree_busdisconnect(struct usbbusnode *bus);
 extern void devtree_devconnect(struct usbdevnode *dev);
 extern void devtree_devdisconnect(struct usbdevnode *dev);
 extern void devtree_processchanges(void);
-extern void devtree_dump(void);
+extern void devtree_dump(unsigned int verblevel);
 
-extern int lprintf(unsigned int vl, const char *format, ...) __attribute__ ((format (printf, 2, 3)));
+extern int lprintf(unsigned int vl, const char *format, ...)
+	__attribute__ ((format (printf, 2, 3)));
 
 /* ---------------------------------------------------------------------- */
 #endif /* _DEVTREE_H */

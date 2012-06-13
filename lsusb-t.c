@@ -10,9 +10,11 @@
 #include <stddef.h>
 
 #include "list.h"
+#include "lsusb.h"
 
 #define MY_SYSFS_FILENAME_LEN 255
 #define MY_PATH_MAX 4096
+#define MY_PARAM_MAX 64
 
 struct usbinterface {
 	struct list_head list;
@@ -47,7 +49,7 @@ struct usbdevice {
 	unsigned int bDeviceProtocol;
 	unsigned int bDeviceSubClass;
 	unsigned int bMaxPacketSize0;
-	char bMaxPower[64];
+	char bMaxPower[MY_PARAM_MAX];
 	unsigned int bNumConfigurations;
 	unsigned int bNumInterfaces;
 	unsigned int bcdDevice;
@@ -57,11 +59,11 @@ struct usbdevice {
 	unsigned int idProduct;
 	unsigned int idVendor;
 	unsigned int maxchild;
-	char manufacturer[64];
-	char product[64];
-	char serial[64];
-	char version[64];
-	char speed[4 + 1];	/* '1.5','12','480' + '\n' */
+	char manufacturer[MY_PARAM_MAX];
+	char product[MY_PARAM_MAX];
+	char serial[MY_PARAM_MAX];
+	char version[MY_PARAM_MAX];
+	char speed[MY_PARAM_MAX];	/* '1.5','12','480','5000' + '\n' */
 
 	char name[MY_SYSFS_FILENAME_LEN];
 	char driver[MY_SYSFS_FILENAME_LEN];
@@ -76,14 +78,14 @@ struct usbbusnode {
 	unsigned int bDeviceClass;
 	unsigned int devnum;
 	unsigned int maxchild;
-	char speed[4 + 1];	/* '1.5','12','480' + '\n' */
+	char speed[5 + 1];	/* '1.5','12','480','5000' + '\n' */
 
 	char driver[MY_SYSFS_FILENAME_LEN];
 };
 
 #define SYSFS_INTu(de,tgt, name) do { tgt->name = read_sysfs_file_int(de,#name,10); } while(0)
 #define SYSFS_INTx(de,tgt, name) do { tgt->name = read_sysfs_file_int(de,#name,16); } while(0)
-#define SYSFS_STR(de,tgt, name) do { read_sysfs_file_string(de, #name, tgt->name, MY_SYSFS_FILENAME_LEN); } while(0)
+#define SYSFS_STR(de,tgt, name) do { read_sysfs_file_string(de, #name, tgt->name, MY_PARAM_MAX); } while(0)
 
 LIST_HEAD(interfacelist);
 LIST_HEAD(usbdevlist);
@@ -235,7 +237,7 @@ static void read_sysfs_file_string(const char *d_name, const char *file, char *b
 		goto error;
 	r = read(fd, buf, len);
 	close(fd);
-	if (r >= 0 && r < len) {
+	if (r > 0 && r < len) {
 		buf[r] = '\0';
 		r--;
 		while (buf[r] == '\n') {
@@ -301,7 +303,7 @@ static void add_usb_interface(const char *d_name)
 {
 	struct usbinterface *e;
 	const char *p;
-	char *pn, link[MY_PATH_MAX];
+	char *pn, driver[MY_PATH_MAX];
 	unsigned long i;
 	int l;
 	p = strchr(d_name, ':');
@@ -317,7 +319,10 @@ static void add_usb_interface(const char *d_name)
 	p = pn + 1;
 	i = strtoul(p, &pn, 10);
 	if (!pn || p == pn)
+	{
+		free(e);
 		return;
+	}
 	e->ifnum = i;
 	if (snprintf(e->name, MY_SYSFS_FILENAME_LEN, "%s", d_name) >= MY_SYSFS_FILENAME_LEN)
 		printf("warning: '%s' truncated to '%s'\n", e->name, d_name);
@@ -327,17 +332,17 @@ static void add_usb_interface(const char *d_name)
 	SYSFS_INTx(d_name, e, bInterfaceProtocol);
 	SYSFS_INTx(d_name, e, bInterfaceSubClass);
 	SYSFS_INTx(d_name, e, bNumEndpoints);
-	l = snprintf(link, MY_PATH_MAX, "%s/%s/driver", sys_bus_usb_devices, d_name);
+	l = snprintf(driver, MY_PATH_MAX, "%s/%s/driver", sys_bus_usb_devices, d_name);
 	if (l > 0 && l < MY_PATH_MAX) {
-		l = readlink(link, link, MY_PATH_MAX);
+		l = readlink(driver, driver, MY_PATH_MAX);
 		if (l < 0)
 			perror(d_name);
 		else {
 			if (l < MY_PATH_MAX - 1)
-				link[l] = '\0';
+				driver[l] = '\0';
 			else
-				link[0] = '\0';
-			p = strrchr(link, '/');
+				driver[0] = '\0';
+			p = strrchr(driver, '/');
 			if (p)
 				snprintf(e->driver, sizeof(e->driver), "%s", p + 1);
 		}
@@ -350,7 +355,7 @@ static void add_usb_device(const char *d_name)
 {
 	struct usbdevice *d;
 	const char *p;
-	char *pn, link[MY_PATH_MAX];
+	char *pn, driver[MY_PATH_MAX];
 	unsigned long i;
 	int l;
 	p = d_name;
@@ -392,17 +397,17 @@ static void add_usb_device(const char *d_name)
 	SYSFS_STR(d_name, d, serial);
 	SYSFS_STR(d_name, d, version);
 	SYSFS_STR(d_name, d, speed);
-	l = snprintf(link, MY_PATH_MAX, "%s/%s/driver", sys_bus_usb_devices, d_name);
+	l = snprintf(driver, MY_PATH_MAX, "%s/%s/driver", sys_bus_usb_devices, d_name);
 	if (l > 0 && l < MY_PATH_MAX) {
-		l = readlink(link, link, MY_PATH_MAX);
+		l = readlink(driver, driver, MY_PATH_MAX);
 		if (l < 0)
 			perror(d_name);
 		else {
 			if (l < MY_PATH_MAX - 1)
-				link[l] = '\0';
+				driver[l] = '\0';
 			else
-				link[0] = '\0';
-			p = strrchr(link, '/');
+				driver[0] = '\0';
+			p = strrchr(driver, '/');
 			if (p)
 				snprintf(d->driver, sizeof(d->driver), "%s", p + 1);
 		}
