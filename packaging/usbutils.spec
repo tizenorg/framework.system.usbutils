@@ -20,7 +20,7 @@ USB bus.
 %build
 cp %{SOURCE1001} .
 %reconfigure \
-	--datadir=/usr/lib/usbutils
+	--datadir=%{_libdir}/usbutils
 
 make %{?_smp_mflags}
 
@@ -34,6 +34,6 @@ make install DESTDIR=%{buildroot} pkgconfigdir=/usr/share/pkgconfig
 %defattr(-,root,root,-)
 %{_sbindir}/*
 %{_bindir}/*
-%{_datadir}/pkgconfig/usbutils.pc
 %{_prefix}/share/*
+%{_libdir}/usbutils/usb.ids
 %doc AUTHORS COPYING ChangeLog NEWS README
