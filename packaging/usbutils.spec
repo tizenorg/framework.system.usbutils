@@ -8,7 +8,7 @@ License: GPLv2+
 
 BuildRequires: autoconf, libtool, pkgconfig(libusb-1.0)
 Summary: Linux USB utilities
-Group: Applications/System
+Group: Base/Tools
 
 %description
 This package contains utilities for inspecting devices connected to a
