@@ -1,3 +1,11 @@
+usbutils (0.86-7slp2) unstable; urgency=low
+
+  * Change datadir from /var to /usr for usb.ids* files to be installed under /usr.
+  * Git: 165.213.180.234:/git/slp/pkgs/xorg/miscs/usbutils
+  * Tag: usbutils_0.86-7slp2
+
+ -- Sung-Jin Park <sj76.park@samsung.com>  Mon, 19 Mar 2012 19:32:37 +0900
+
 usbutils (0.86-6slp2) unstable; urgency=low
 
   * Modify debian/changelog to put Git and Tag info
@@ -14,7 +22,7 @@ usbutils (0.86-5slp2) unstable; urgency=low
 
 usbutils (0.86-4) unstable; urgency=low
 
-  * Correctly dump CCID info now that it is an official USB class and 
+  * Correctly dump CCID info now that it is an official USB class and
     that devices start to use it with non-tagged descriptors.  Closes:
     bug#569783.
   * Update usb.ids.
@@ -32,7 +40,7 @@ usbutils (0.86-3) unstable; urgency=low
 
 usbutils (0.86-2) unstable; urgency=low
 
-  * Install the usbutils.pc in the correct directory. 
+  * Install the usbutils.pc in the correct directory.
 
  -- Aurelien Jarno <aurel32@debian.org>  Sun, 23 Aug 2009 23:42:04 +0200
 
@@ -61,7 +69,7 @@ usbutils (0.82-1) unstable; urgency=low
 
 usbutils (0.81-1) unstable; urgency=low
 
-  * New upstream version. 
+  * New upstream version.
     - Device tree option works with usbfs not mounted (closes: bug#498723).
   * Improve manpage (closes: bug#506800).
   * usb.ids:
@@ -75,13 +83,13 @@ usbutils (0.81-1) unstable; urgency=low
 
 usbutils (0.73-10) unstable; urgency=low
 
-  * Fix a typo in README.Debian. 
+  * Fix a typo in README.Debian.
 
  -- Aurelien Jarno <aurel32@debian.org>  Wed, 13 Aug 2008 01:03:10 +0200
 
 usbutils (0.73-9) unstable; urgency=low
 
-  * Update usb.ids. 
+  * Update usb.ids.
   * Add a README.Debian explaining how to submit new USB ID's.
   * Bumped Standards-Version to 3.8.0 (no changes).
 
@@ -89,14 +97,14 @@ usbutils (0.73-9) unstable; urgency=low
 
 usbutils (0.73-8) unstable; urgency=low
 
-  * Update usb.ids. 
+  * Update usb.ids.
   * Add CCU-550 USB modem to usb.ids (closes: bug#480484).
 
  -- Aurelien Jarno <aurel32@debian.org>  Sat, 10 May 2008 14:24:32 +0200
 
 usbutils (0.73-7) unstable; urgency=low
 
-  * Fix the last changelog entry, no code change. 
+  * Fix the last changelog entry, no code change.
 
  -- Aurelien Jarno <aurel32@debian.org>  Mon, 03 Mar 2008 14:42:52 +0100
 
@@ -110,7 +118,7 @@ usbutils (0.73-6) unstable; urgency=low
 
 usbutils (0.73-5) unstable; urgency=low
 
-  * Fix broken link in /usr/share/misc/ (closes: bug#453363). 
+  * Fix broken link in /usr/share/misc/ (closes: bug#453363).
 
  -- Aurelien Jarno <aurel32@debian.org>  Thu, 29 Nov 2007 10:11:17 +0100
 
@@ -124,14 +132,14 @@ usbutils (0.73-4) unstable; urgency=low
 
 usbutils (0.73-3) unstable; urgency=low
 
-  * Use endian.h instead of asm/byteorder.h. Fix build on non-linux 
+  * Use endian.h instead of asm/byteorder.h. Fix build on non-linux
     systems.
 
  -- Aurelien Jarno <aurel32@debian.org>  Wed, 24 Oct 2007 15:01:21 +0200
 
 usbutils (0.73-2) unstable; urgency=low
 
-  * Reupload the correct version (closes: bug#447851). 
+  * Reupload the correct version (closes: bug#447851).
 
  -- Aurelien Jarno <aurel32@debian.org>  Wed, 24 Oct 2007 11:51:20 +0200
 
@@ -143,7 +151,7 @@ usbutils (0.73-1) unstable; urgency=low
 
 usbutils (0.72-9) unstable; urgency=low
 
-  * Update usb.ids. 
+  * Update usb.ids.
   * Add Bison Acer Orbicam to usb.ids (closes: bug#425717).
 
  -- Aurelien Jarno <aurel32@debian.org>  Wed, 12 Sep 2007 11:53:14 +0200
@@ -173,13 +181,13 @@ usbutils (0.72-5) unstable; urgency=low
 
   * Added support for gzipped usb.ids files. This reduces the udeb unpacked
     size by 100 kB.
-  * Updated usb.ids. 
+  * Updated usb.ids.
 
  -- Aurelien Jarno <aurel32@debian.org>  Wed,  2 Aug 2006 11:52:27 +0200
 
 usbutils (0.72-4) unstable; urgency=low
 
-  * Fix the parsing of bus number >= 08 in tree mode (closes: bug#373764). 
+  * Fix the parsing of bus number >= 08 in tree mode (closes: bug#373764).
 
  -- Aurelien Jarno <aurel32@debian.org>  Sat, 17 Jun 2006 16:15:32 +0200
 
@@ -191,7 +199,7 @@ usbutils (0.72-3) unstable; urgency=low
 
 usbutils (0.72-2) unstable; urgency=high
 
-  * Don't ship an empty udeb package. 
+  * Don't ship an empty udeb package.
   * Bumped Standards-Version to 3.7.2 (no changes).
 
  -- Aurelien Jarno <aurel32@debian.org>  Wed, 17 May 2006 00:23:07 +0000
@@ -265,15 +273,15 @@ usbutils (0.71-4) unstable; urgency=low
 
 usbutils (0.71-3) unstable; urgency=low
 
-  * Makes udeb depending on libusb-0.1-udeb instead of libusb-0.1-udeb 
+  * Makes udeb depending on libusb-0.1-udeb instead of libusb-0.1-udeb
     instead of libusb-0.1-4.
 
  -- Aurelien Jarno <aurel32@debian.org>  Sun,  5 Jun 2005 22:55:54 +0200
 
 usbutils (0.71-2) unstable; urgency=low
 
-  * Also produce an udeb package. Patch by Colin Watson (closes: 
-    bug#311653). 
+  * Also produce an udeb package. Patch by Colin Watson (closes:
+    bug#311653).
   * Added fix for dpkg-dev >= 1.13.2 (closes: bug#311655).
   * Added HP OfficeJet 5510 to usb.ids (closes: bug#311656).
 
@@ -281,19 +289,19 @@ usbutils (0.71-2) unstable; urgency=low
 
 usbutils (0.71-1) unstable; urgency=low
 
-  * New upstream version. 
+  * New upstream version.
 
  -- Aurelien Jarno <aurel32@debian.org>  Thu, 19 May 2005 00:28:37 +0200
 
 usbutils (0.70-8) unstable; urgency=low
 
-  * Added some webcams to usb.ids (closes: bug#305022). 
+  * Added some webcams to usb.ids (closes: bug#305022).
 
  -- Aurelien Jarno <aurel32@debian.org>  Fri, 22 Apr 2005 19:14:16 +0200
 
 usbutils (0.70-7) unstable; urgency=low
 
-  * Fixed USB IDs for Zaurus C-860 (closes: bug#304818). 
+  * Fixed USB IDs for Zaurus C-860 (closes: bug#304818).
 
  -- Aurelien Jarno <aurel32@debian.org>  Sat, 16 Apr 2005 00:24:19 +0200
 
@@ -305,14 +313,14 @@ usbutils (0.70-6) unstable; urgency=low
 
 usbutils (0.70-5) unstable; urgency=low
 
-  * Only suggests wget or lynx instead of depending on it 
+  * Only suggests wget or lynx instead of depending on it
     (closes: bug#30492).
 
  -- Aurelien Jarno <aurel32@debian.org>  Fri,  1 Apr 2005 08:04:08 +0200
 
 usbutils (0.70-4) unstable; urgency=low
 
-  * Fixed manpage (closes: bug#302144). 
+  * Fixed manpage (closes: bug#302144).
 
  -- Aurelien Jarno <aurel32@debian.org>  Wed, 30 Mar 2005 12:19:08 +0200
 
@@ -325,14 +333,14 @@ usbutils (0.70-3) unstable; urgency=low
 
 usbutils (0.70-2) unstable; urgency=low
 
-  * Only build usbmodules on systems using a Linux kernel. 
+  * Only build usbmodules on systems using a Linux kernel.
 
  -- Aurelien Jarno <aurel32@debian.org>  Thu, 17 Mar 2005 18:13:49 +0100
 
 usbutils (0.70-1) unstable; urgency=medium
 
-  * New upstream version. This is basically the same as the CVS version 
-    used before, with some autoconf/automake update as well as gcc 4.0 
+  * New upstream version. This is basically the same as the CVS version
+    used before, with some autoconf/automake update as well as gcc 4.0
     fixes. It only makes official changes that were already in the Debian
     package.
 
@@ -362,7 +370,7 @@ usbutils (0.11+cvs20041016-4) unstable; urgency=high
 usbutils (0.11+cvs20041016-3) unstable; urgency=high
 
   * Moved usb.ids to /var/lib/usbutils to be FHS compliant (closes:
-    bug#278480). 
+    bug#278480).
 
  -- Aurelien Jarno <aurel32@debian.org>  Wed, 27 Oct 2004 09:54:27 +0000
 
@@ -378,7 +386,7 @@ usbutils (0.11+cvs20041016-1) unstable; urgency=low
   * New CVS version:
     - USB 2.0 updates for dual-speed and OTG devices, hubs.
     - Display all descriptors in the right sequence, and dump ones
-      we don't (yet) recognize.  
+      we don't (yet) recognize.
     - Minor cleanups.
     - usb.ids updated.
 
@@ -394,8 +402,8 @@ usbutils (0.11+cvs20040318-3) unstable; urgency=low
 
 usbutils (0.11+cvs20040318-2) unstable; urgency=low
 
-  * Added symlinks for manpages: 
-    - lsusb(1) -> lsusb(8) 
+  * Added symlinks for manpages:
+    - lsusb(1) -> lsusb(8)
     - usbmodules(1) -> usbmodules(8)
 
  -- Aurelien Jarno <aurel32@debian.org>  Wed,  5 May 2004 08:59:01 +0200
@@ -416,7 +424,7 @@ usbutils (0.11+cvs20040313-2) unstable; urgency=low
 usbutils (0.11+cvs20040313-1) unstable; urgency=low
 
   * New version from CVS.
-  * Applied patch from Lee Maguire to support reporting of keyboard 
+  * Applied patch from Lee Maguire to support reporting of keyboard
     country type (closes: bug#237015).
   * Updated usb.ids.
 
@@ -424,7 +432,7 @@ usbutils (0.11+cvs20040313-1) unstable; urgency=low
 
 usbutils (0.11-8) unstable; urgency=low
 
-  * Applied patch from David Brownell to dump more information on HUB 
+  * Applied patch from David Brownell to dump more information on HUB
     devices.
 
  -- Aurelien Jarno <aurel32@debian.org>  Sun, 15 Feb 2004 12:05:39 +0100
@@ -450,7 +458,7 @@ usbutils (0.11-6) unstable; urgency=low
 
 usbutils (0.11-5) unstable; urgency=low
 
-  * Fixed a bug which could occurs when getting descriptors from HID 
+  * Fixed a bug which could occurs when getting descriptors from HID
     devices.
 
  -- Aurelien Jarno <aurel32@debian.org>  Sun, 16 Nov 2003 20:18:14 +0100
@@ -468,8 +476,8 @@ usbutils (0.11-3) unstable; urgency=low
   * Moved usb.ids to /usr/share/misc so that other packages could use it.
     (closes: bug#184894).
   * Added a script to update usb.ids (closes: bug#204879).
-  * Don't build libusb. This is better than building it and removing the 
-    corresponding files later. That remove the call of an old configure 
+  * Don't build libusb. This is better than building it and removing the
+    corresponding files later. That remove the call of an old configure
     file (closes: bug#201934).
 
  -- Aurelien Jarno <aurel32@debian.org>  Fri, 24 Oct 2003 23:24:14 +0200

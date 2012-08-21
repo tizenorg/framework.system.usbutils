@@ -1,12 +1,13 @@
+#sbs-git:slp/pkgs/xorg/miscs/usbutils usbutils 0.86 9271bc1e8de96d6f0ee693af5853e58152ce6a59
 Name:           usbutils
-Version:        0.86
+Version: 0.86
 Release:        6
 License:        GPLv2+
 Url:            http://www.linux-usb.org/
 Source:         http://downloads.sourceforge.net/linux-usb/%{name}-%{version}.tar.gz
 Summary:        Linux USB utilities
 Group:          Applications/System
-#Source101:      usbutils-rpmlintrc
+Source101:      usbutils-rpmlintrc
 BuildRequires:  autoconf,
 BuildRequires:  libtool,
 BuildRequires:  pkgconfig(libusb) >= 0.1.8
