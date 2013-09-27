@@ -26,6 +26,9 @@ USB bus.
 make %{?_smp_mflags}
 
 %install
+mkdir -p %{buildroot}/usr/share/license
+cp COPYING %{buildroot}/usr/share/license/%{name}
+
 make install DESTDIR=%{buildroot} pkgconfigdir=/usr/share/pkgconfig
 
 %docs_package
@@ -37,4 +40,4 @@ make install DESTDIR=%{buildroot} pkgconfigdir=/usr/share/pkgconfig
 %{_datadir}/pkgconfig/usbutils.pc
 /usr/lib/usbutils/*
 %doc COPYING
-
+/usr/share/license/%{name}
