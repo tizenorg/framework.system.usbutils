@@ -2,7 +2,7 @@
 Name:           usbutils
 Version: 0.86
 Release:        6
-License:        GPL-2.0+
+License:        GPLv2+
 Url:            http://www.linux-usb.org/
 Source:         http://downloads.sourceforge.net/linux-usb/%{name}-%{version}.tar.gz
 Summary:        Linux USB utilities
